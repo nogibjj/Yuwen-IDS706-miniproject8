@@ -8,7 +8,8 @@ use std::time::Instant;
 fn main() -> Result<(), Box<dyn Error>> {
     let start_time = Instant::now();
     // 1. Read the cars.csv file
-    let file = File::open("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv")?;
+    let file =
+        File::open("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv")?;
 
     // Create the CSV reader with the specified delimiter
     let mut rdr = ReaderBuilder::new()
