@@ -8,7 +8,7 @@ use std::time::Instant;
 fn main() -> Result<(), Box<dyn Error>> {
     let start_time = Instant::now();
     // 1. Read the cars.csv file
-    let file = File::open("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv")?;
+    let file = File::open("vehicles.csv")?;
 
     // Create the CSV reader with the specified delimiter
     let mut rdr = ReaderBuilder::new()
@@ -16,7 +16,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         .has_headers(true)
         .from_reader(file);
 
-    // Find the index of the "Weight" column
+    // Find the index of first
     let headers = rdr.headers()?;
     let weight_index = headers
         .iter()
