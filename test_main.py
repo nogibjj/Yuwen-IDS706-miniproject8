@@ -1,32 +1,36 @@
-import polars as pl
-from main import create_dataframe, calculate_mean_weight
-from main import calculate_sum_weight, calculate_correlation_matrix
+from main import load_data, get_data_descriptive_stats
+import pandas as pd
+import time
+import psutil
 
-def sample_dataframe():
-    data = {
-        'age': [25, 30, 35, 40, 45],
-        'height': [165, 170, 175, 180, 185],
-        'weight': [60, 70, 80, 90, 100]
-    }
-    return pl.DataFrame(data)
+def test_loaddata():
+    #load iris dataset
+    path = 'https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv'
+    iris_df = load_data(path)
+    assert isinstance(iris_df, pd.DataFrame)
+    assert not iris_df.empty
 
-def test_create_dataframe():
-    dataframe = create_dataframe()
-    assert len(dataframe) == 5
+def test_descriptive_stats():
+    path = 'https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv'
+    iris_df = load_data(path) 
+    statistics = get_data_descriptive_stats(iris_df)
+    assert statistics['Mean']['sepal_length'] == 5.843333333333334
 
-def test_calculate_mean_weight():
-    data = create_dataframe()
-    mean_weight = calculate_mean_weight(data)
-    assert mean_weight == 80.0
+def test():
+    start = time.time()
+    test_loaddata()
+    test_descriptive_stats()
 
-def test_calculate_sum_weight():
-    data = create_dataframe()
-    sum_weight = calculate_sum_weight(data)
-    assert sum_weight == 400
+    end = time.time()
+    duration = end - start
+    cpu_usage = psutil.cpu_percent()
+    mem_usage = psutil.virtual_memory()
 
-def test_calculate_correlation_matrix():
-    data = create_dataframe()
-    correlation_matrix = calculate_correlation_matrix(data)
-    assert correlation_matrix.to_pandas().equals(
-        data[['age', 'height', 'weight']].corr().to_pandas()
-    )
+    print(f"Elapsed time: {duration:.4f} seconds")
+    print(f"CPU Usage: {cpu_usage}%")
+    print(f"Memory Usage: {mem_usage.percent}%")
+
+
+if __name__ == "__main__":
+    test()
+    print("CICD Passed.")

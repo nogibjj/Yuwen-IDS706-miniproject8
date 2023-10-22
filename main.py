@@ -1,18 +1,14 @@
-import polars as pl
+import pandas as pd
 
-def create_dataframe():
-    data = {
-        'age': [25, 30, 35, 40, 45],
-        'height': [165, 170, 175, 180, 185],
-        'weight': [60, 70, 80, 90, 100]
+def load_data(datapath):
+    return pd.read_csv(datapath)
+
+def get_data_descriptive_stats(dataframe):
+    statistics = {
+        'Mean': dataframe.mean(numeric_only=True),
+        'Median': dataframe.median(numeric_only=True),
+        'StdDev': dataframe.std(numeric_only=True),
+        'Min': dataframe.min(numeric_only=True),
+        'Max': dataframe.max(numeric_only=True)
     }
-    return pl.DataFrame(data)
-
-def calculate_mean_weight(dataframe):
-    return dataframe['weight'].mean()
-
-def calculate_sum_weight(dataframe):
-    return dataframe['weight'].sum()
-
-def calculate_correlation_matrix(dataframe):
-    return dataframe[['age', 'height', 'weight']].corr()
+    return pd.Series(statistics)
