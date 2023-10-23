@@ -29,13 +29,15 @@ These functions enable the creation of a simple dataset and the calculation of i
 
 ---
 
+
 **Python Result**
 Make py_test result:
 ![Alt text](<py_test_result.png>)
 
+
 ---
 
-**Comparison**
+**Result Comparison**
 ![Alt text](<py_result.png>)
 ![Alt text](<rs_result.png>)
 
